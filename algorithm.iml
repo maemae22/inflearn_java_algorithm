@@ -3,6 +3,16 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/1. String(문자열)" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/10. dynamic programming(동적계획법)" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/2. Array(1, 2차원 배열)" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/3. Two pointers, Sliding window[효율성 O(n2) - O(n)]" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/4. HashMap, TreeSet (해쉬, 정렬지원 Set)" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/5. Stack, Queue(자료구조)" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/6. Sorting and Searching(정렬, 이분검색과 결정알고리즘)" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/7. Recursive, Tree, Graph(DFS, BFS 기초)" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/8. DFS, BFS 활용" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/9. Greedy Algorithm" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
