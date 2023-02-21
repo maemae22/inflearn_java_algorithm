@@ -7,15 +7,19 @@ import java.io.*;
 // ex. gooG -> YES
 public class P07_회문문자열 {
 
-    // 방법1.
+    // 방법1, 3. 뒤집어보기
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String letter = br.readLine().toUpperCase();
         String newLetter = "";
 
+        // 방법1.
         for (int i=0; i<letter.length(); i++) {
             newLetter = letter.charAt(i) + newLetter;
         }
+
+        // 방법3. StringBuilder 이용
+//        newLetter = new StringBuilder(letter).reverse().toString();
 
         if (newLetter.equals(letter)) {
             System.out.println("YES");
@@ -47,5 +51,37 @@ public class P07_회문문자열 {
         if (result) {
             System.out.println("YES");
         }
+    }
+
+    // 방법4.
+    public static void main4(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String letter = br.readLine().toUpperCase();
+        String answer = "YES";
+
+        int length = letter.length();
+        for (int i=0; i<length/2; i++) {
+            if (letter.charAt(i) != letter.charAt(length-1-i)) {
+                answer = "NO";
+                break;
+            }
+        }
+
+        System.out.println(answer);
+    }
+
+    // 방법5. StringBuilder, equalsIgnoreCase() 사용
+    public static void main5(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String letter = br.readLine();
+        String answer = "NO";
+
+        String newLetter = new StringBuilder(letter).reverse().toString();
+
+        if (letter.equalsIgnoreCase(newLetter)) {
+            answer = "YES";
+        }
+
+        System.out.println(answer);
     }
 }
