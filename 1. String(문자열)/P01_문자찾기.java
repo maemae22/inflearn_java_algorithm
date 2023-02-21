@@ -15,6 +15,15 @@ public class P01_문자찾기 {
             }
         }
 
+        /*
+        // 방법2. 향상된 for문
+        for( char oneChar : letter.toCharArray()) {
+            if (c == oneChar) {
+                count++;
+            }
+        }
+         */
+
         System.out.println(count);
     }
 }
