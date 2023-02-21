@@ -23,6 +23,13 @@ public class P06_중복문자제거 {
                 answer += letter.charAt(i);
             }
              */
+
+            /*
+            // 방법3. indexOf() 사용 : indexOf()는 해당 char가 존재하는 가장 빠른 index를 반환함
+            if (letter.indexOf(letter.charAt(i)) == i) {
+                answer += letter.charAt(i);
+            }
+             */
         }
 
         System.out.println(answer);
