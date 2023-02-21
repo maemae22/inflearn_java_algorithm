@@ -8,6 +8,7 @@ import java.io.*;
 // ex. found7, time: study; Yduts; emit, 7Dnuof -> YES
 public class P08_유효한팰린드롬 {
 
+    // 방법1. Character.isAlphabetic(c) 사용
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String letter = br.readLine().toUpperCase();
@@ -39,5 +40,20 @@ public class P08_유효한팰린드롬 {
         if (result) {
             System.out.println("YES");
         }
+    }
+
+    // 방법2. replaceAll 정규식 이용
+    public static void main2(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String letter = br.readLine().toUpperCase().replaceAll("[^A-Z]", "");
+        String answer = "NO";
+
+        String reverse = new StringBuilder(letter).reverse().toString();
+
+        if (letter.equals(reverse)) {
+            answer = "YES";
+        }
+
+        System.out.println(answer);
     }
 }
