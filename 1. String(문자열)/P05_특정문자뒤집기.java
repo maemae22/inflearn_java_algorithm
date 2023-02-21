@@ -6,6 +6,7 @@ import java.io.*;
 // ex. a#b!GE*T@S -> S#T!EG*b@a
 public class P05_특정문자뒤집기 {
 
+    // 방법 1.
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         char[] letter = br.readLine().toCharArray();
@@ -47,4 +48,34 @@ public class P05_특정문자뒤집기 {
             return false;
         }
     }
+
+    // 방법2. Character.isAlphabetic(c) 사용 ! 알파벳인지 아닌지 알려줌
+    public static void main2(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        char[] letter = br.readLine().toCharArray();
+
+        int lt = 0;
+        int rt = letter.length - 1;
+
+        while(lt < rt) {
+
+            if (!Character.isAlphabetic(letter[lt])) { // letter[lt]가 특수문자이면,
+                lt++;
+            } else if (!Character.isAlphabetic(letter[rt])) { // letter[rt]가 특수문자이면,
+                rt--;
+            } else { // letter[lt]와 letter[rt]가 모두 영문자일 경우에,
+                // 서로 바꿔준다
+                char tmp = letter[lt];
+                letter[lt] = letter[rt];
+                letter[rt] = tmp;
+
+                lt++;
+                rt--;
+            }
+        }
+
+        String answer = String.valueOf(letter);
+        System.out.println(answer);
+    }
+
 }
