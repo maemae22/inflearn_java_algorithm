@@ -31,26 +31,10 @@ public class P03_가위바위보 {
 
         if (A==B) {
             return "D";
-        }
-
-        if (A==1) {
-            if (B==2) {
-                return "B";
-            } else {
-                return "A";
-            }
-        } else if (A==2) {
-            if (B==1) {
-                return "A";
-            } else {
-                return "B";
-            }
+        } else if ( (A==1 && B==3) || (A==2 && B==1) || (A==3 && B==2) ) {
+            return "A";
         } else {
-            if (B==1) {
-                return "B";
-            } else {
-                return "A";
-            }
+            return "B";
         }
     }
 
