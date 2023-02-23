@@ -14,7 +14,8 @@ ex.
  */
 public class P09_격자판최대합 {
 
-    public static void main(String[] args) throws Exception {
+    // 방법1.
+    public static void main1(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
         int[][] scores = new int[N+1][N+1];
@@ -74,4 +75,53 @@ public class P09_격자판최대합 {
         System.out.println(max);
     }
 
+    // 방법2. (사실상 1번이랑 같은 방법인데 코드만 더 간결하게 줄이기 .. !)
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+        int[][] scores = new int[N+1][N+1];
+        for (int i=1; i<=N; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            for (int j=1; j<=N; j++) {
+                scores[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
+
+        int max = 0;
+        int garoTotal = 0;
+        int saeroTotal = 0;
+
+        // 가로, 세로 더한거 N*2개 중에 최댓값 구하기
+        for (int i=1; i<=N; i++) {
+            for (int j=1; j<=N; j++) {
+                garoTotal += scores[i][j];
+                saeroTotal += scores[j][i];
+            }
+            // 최댓값 구하기
+            // 방법2-1.
+            if (garoTotal > max) {
+                max = garoTotal;
+            }
+            if (saeroTotal > max) {
+                max = saeroTotal;
+            }
+            // 방법2-2.
+//            max = Math.max(max, garoTotal);
+//            max = Math.max(max, saeroTotal);
+
+            // 초기화
+            garoTotal = 0;
+            saeroTotal = 0;
+        }
+
+        // 대각선 더한거 각각 1개씩 2개
+        for (int i=1; i<=N; i++) {
+            garoTotal += scores[i][i];
+            saeroTotal += scores[i][N+1-i];
+        }
+        max = Math.max(max, garoTotal);
+        max = Math.max(max, saeroTotal);
+
+        System.out.println(max);
+    }
 }
