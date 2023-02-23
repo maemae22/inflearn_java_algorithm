@@ -18,7 +18,8 @@ ex.
  */
 public class P11_임시반장정하기 {
 
-    public static void main(String[] args) throws Exception {
+    // 방법1.
+    public static void main1(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
         int[][] arr = new int[N+1][5];
@@ -47,6 +48,44 @@ public class P11_임시반장정하기 {
             for (int t=1; t<=N; t++) {
                 if (same[t]>=1) {
                     count++;
+                }
+            }
+
+            if (count > max) {
+                studentNum = i;
+                max = count;
+            }
+        }
+
+        System.out.println(studentNum);
+    }
+
+    // 방법2. 사실상 1번이랑 로직 똑같음 .. !
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+        int[][] arr = new int[N+1][6];
+
+        for (int i=1; i<=N; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            for (int j=1; j<=5; j++) {
+                arr[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
+
+        int max = 0;
+        int studentNum = 0;
+
+        for (int i=1; i<=N; i++) { // ex. 1번 학생일때
+            int count = 0;
+
+            for (int j=1; j<=N; j++) { // ex. 1~N번 학생이랑 비교
+                for (int k=1; k<=5; k++) { // 1~5학년까지 돌면서 비교
+                    if (arr[i][k] == arr[j][k]) {
+                        count++; // 1~5학년까지 돌면서 같은 반이였던 적이 있으면 count를 올려줌
+                        break; // 똑같은 사람이 중복 집계되면 안되기 때문에 더이상 비교하지 않고 break.
+                                // (ex. 2학년, 3학년 때 모두 같은 반이였다면, break가 없을 시 2명으로 집계됨)
+                    }
                 }
             }
 
