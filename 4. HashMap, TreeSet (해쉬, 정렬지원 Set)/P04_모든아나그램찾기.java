@@ -31,11 +31,11 @@ public class P04_모든아나그램찾기 {
 
         int answer = 0;
         int lt = 0;
-        int rt = 0;
-        for (rt=second.length()-1; rt<first.length(); rt++) {
+        for (int rt=second.length()-1; rt<first.length(); rt++) {
             firstMap.put(firsts[rt], firstMap.getOrDefault(firsts[rt], 0)+1 );
 
             // 아나그램인지 비교
+            // 방법1-1. for문 돌면서 비교
             boolean ok = true;
             for (char c : firstMap.keySet()) {
                 if (firstMap.get(c) != secondMap.get(c)) {
@@ -46,6 +46,14 @@ public class P04_모든아나그램찾기 {
             if (ok) {
                 answer++;
             }
+
+            /*
+            // 방법1-2. equals 메서드로 비교
+            if (firstMap.equals(secondMap)) {
+                answer++;
+            }
+            */
+
 
             // lt 제거 및 lt 증가
             firstMap.put(firsts[lt], firstMap.get(firsts[lt])-1 );
