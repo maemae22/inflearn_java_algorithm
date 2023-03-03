@@ -12,7 +12,8 @@ ex.
  */
 public class P03_매출액의종류 {
 
-    public static void main(String[] args) throws Exception {
+    // 방법1. HashMap + TreeSet 같이 쓰기 (복잡함)
+    public static void main1(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         int N = Integer.parseInt(st.nextToken());
@@ -62,6 +63,41 @@ public class P03_매출액의종류 {
 
 //            System.out.println("lt = "+lt+", rt = "+rt+" / set.size() = "+set.size());
 //            System.out.println(set);
+        }
+
+        System.out.println(sb.toString());
+    }
+
+    // 방법2. HashMap만 사용! (간단, 깔끔함)
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken());
+        int[] arr = new int[N];
+        st = new StringTokenizer(br.readLine());
+        for (int i=0; i<N; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
+        }
+
+        StringBuilder sb = new StringBuilder();
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        for (int i=0; i<K-1; i++) {
+            map.put(arr[i], map.getOrDefault(arr[i], 0)+1 );
+        }
+
+        int lt = 0;
+        for (int rt=K-1; rt<N; rt++) {
+            map.put(arr[rt], map.getOrDefault(arr[rt], 0)+1 );
+            sb.append(map.size());
+            sb.append(" ");
+
+            map.put(arr[lt], map.get(arr[lt])-1 );
+            if (map.get(arr[lt]) == 0) {
+                map.remove(arr[lt]);
+            }
+            lt++;
         }
 
         System.out.println(sb.toString());
