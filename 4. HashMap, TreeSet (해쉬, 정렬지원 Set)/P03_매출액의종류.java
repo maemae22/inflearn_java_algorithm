@@ -35,7 +35,8 @@ public class P03_매출액의종류 {
             }
         }
 
-        sb.append(set.size()+" ");
+        sb.append(set.size());
+        sb.append(" ");
 
         int lt = 0;
         for (int rt=K; rt<N; rt++) {
@@ -56,7 +57,8 @@ public class P03_매출액의종류 {
                 set.add(arr[rt]);
             }
 
-            sb.append(set.size()+" ");
+            sb.append(set.size());
+            sb.append(" ");
 
 //            System.out.println("lt = "+lt+", rt = "+rt+" / set.size() = "+set.size());
 //            System.out.println(set);
