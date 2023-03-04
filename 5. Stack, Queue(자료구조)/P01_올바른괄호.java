@@ -9,6 +9,8 @@ ex.
 (()(()))(() -> NO
  */
 public class P01_올바른괄호 {
+
+    // 방법1. Stack 사용 X
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String letter = br.readLine();
@@ -29,6 +31,34 @@ public class P01_올바른괄호 {
         } else {
             System.out.println("YES");
         }
+
+    }
+
+    // 방법2. Stack 사용
+    public static void main2(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String letter = br.readLine();
+
+        String answer = "YES";
+        Stack<Character> stack = new Stack<>();
+
+        for (char c : letter.toCharArray()) {
+            if (c=='(') {
+                stack.push('(');
+            } else { // ')'일 때
+                if (stack.isEmpty()) {
+                    answer = "NO";
+                    break;
+                }
+                stack.pop();
+            }
+        }
+
+        if (!stack.isEmpty()) {
+            answer = "NO";
+        }
+
+        System.out.println(answer);
 
     }
 }
