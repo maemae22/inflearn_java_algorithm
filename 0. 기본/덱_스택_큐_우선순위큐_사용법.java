@@ -60,6 +60,18 @@ public class 덱_스택_큐_우선순위큐_사용법 {
         stack.isEmpty();   // stack이 비어있는지 check (비어있다면 true)
         stack.contains(1); // stack에 1이 있는지 check (있다면 true)
 
+        // Stack 전체 출력 : stack.size() / stack.get() / 향상된 for문
+        // 1. for문 : stack.size() / stack.get(i)
+        for (int i=0; i<stack.size(); i++) {
+            System.out.println(stack.get(i));
+        }
+
+        // 2. 향상된 for문
+        for (int c : stack) {
+            System.out.println(c);
+        }
+
+
         /*
         [위치]
         top : 삽입과 삭제가 일어나는 위치
