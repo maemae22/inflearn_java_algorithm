@@ -10,7 +10,6 @@ ex.
  */
 public class P01_선택정렬 {
 
-    // 방법1. Arrays.sort(arr); 사용
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
@@ -21,7 +20,27 @@ public class P01_선택정렬 {
         }
 
         StringBuilder sb = new StringBuilder();
-        Arrays.sort(arr);
+
+        // ⭐ arr 배열을 정렬하기 !
+        // 방법1. Arrays.sort(arr);
+//        Arrays.sort(arr);
+
+        // 방법2. 선택정렬 이용
+        for (int i=0; i<N; i++) { // i<N-1 로 해도 됨 .. !
+            int minIndex = i;
+            for (int j=i+1; j<N; j++) {
+                // arr[i] 보다 작은 최솟값 찾기.
+                if (arr[j] < arr[minIndex]) {
+                    minIndex = j;
+                }
+            }
+
+            // arr[i] 보다 작은 최솟값을 찾았으면, arr[i]와 최솟값 자리를 교환해준다.
+            int tmp = arr[i];
+            arr[i] = arr[minIndex];
+            arr[minIndex] = tmp;
+        }
+
         for (int tmp : arr) {
             sb.append(tmp);
             sb.append(" ");
