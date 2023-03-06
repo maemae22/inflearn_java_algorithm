@@ -15,6 +15,8 @@ public class P06_공주구하기 {
         for (int i=1; i<=N; i++) {
             queue.add(i);
         }
+
+        // 방법1.
         int count = 0;
 
         while(queue.size()!=1) {
@@ -28,5 +30,23 @@ public class P06_공주구하기 {
         }
 
         System.out.println(queue.poll());
+
+        /*
+        // 방법2.
+        int answer = 0;
+
+        while(!queue.isEmpty()) {
+            for (int i=1; i<K; i++) {
+                queue.offer(queue.poll());
+            }
+            queue.poll();
+            if (queue.size()==1) {
+                answer = queue.poll();
+            }
+        }
+
+        System.out.println(answer);
+         */
+
     }
 }
