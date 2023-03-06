@@ -5,6 +5,8 @@ import java.io.*;
 // ex1. ()(((()())(())()))(()) -> 17
 // ex2. (((()(()()))(())()))(()()) -> 24
 public class P05_쇠막대기 {
+
+    // 방법1.
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String letter = br.readLine();
@@ -31,6 +33,31 @@ public class P05_쇠막대기 {
         }
 
         count += stack.size();
+
+        System.out.println(count);
+    }
+
+    // 방법2.
+    public static void main2(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String letter = br.readLine();
+
+        Stack<Character> stack = new Stack<>();
+        int count = 0;
+
+        for (int i=0; i<letter.length(); i++) {
+            char c = letter.charAt(i);
+
+            if (c=='(') {
+                stack.push(c);
+            } else if (c==')' && letter.charAt(i-1) == '(') { // 레이저인 경우
+                stack.pop();
+                count += stack.size();
+            } else { // 그냥 닫는 괄호인 경우
+                stack.pop();
+                count++;
+            }
+        }
 
         System.out.println(count);
     }
