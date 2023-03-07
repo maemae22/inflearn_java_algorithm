@@ -24,6 +24,9 @@ public class P03_삽입정렬 {
         // ⭐ arr 배열을 삽입 정렬을 이용하여 정렬하기 !
         // 삽입 정렬 : 두 번째 자료부터 시작하여 그 앞(왼쪽)의 자료들과 비교하여 삽입할 위치를 지정한 후,
         //            자료를 뒤로 옮기고 지정한 자리에 자료를 삽입하여 정렬하는 알고리즘
+        // 설명 : https://gmlwjd9405.github.io/2018/05/06/algorithm-insertion-sort.html
+
+        // 방법1. 삽입 정렬 (1)
         for (int i=1; i<N; i++) {
 //            System.out.println(Arrays.toString(arr));
             int tmp = arr[i];
@@ -41,6 +44,27 @@ public class P03_삽입정렬 {
                 }
             }
         }
+
+        /*
+        // 방법2. 삽입 정렬 (2)
+        for (int i=1; i<N; i++) {
+//            System.out.println(Arrays.toString(arr));
+            int tmp = arr[i];
+            int j=0;
+
+            // tmp의 위치를 찾아서 삽입하기 !
+            for (j=i-1; j>=0; j--) {
+                if (arr[j] > tmp) {
+                    arr[j+1] = arr[j];
+                } else { // arr[j] <= arr[i]
+                    break;
+                }
+            }
+
+            arr[j+1] = tmp;
+        }
+         */
+
 
         // 정렬된 배열을 출력 !
         for (int tmp : arr) {
