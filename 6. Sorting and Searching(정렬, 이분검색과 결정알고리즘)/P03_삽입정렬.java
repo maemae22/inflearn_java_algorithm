@@ -48,7 +48,6 @@ public class P03_삽입정렬 {
         /*
         // 방법2. 삽입 정렬 (2)
         for (int i=1; i<N; i++) {
-//            System.out.println(Arrays.toString(arr));
             int tmp = arr[i];
             int j=0;
 
@@ -59,6 +58,20 @@ public class P03_삽입정렬 {
                 } else { // arr[j] <= arr[i]
                     break;
                 }
+            }
+
+            arr[j+1] = tmp;
+        }
+         */
+
+        /*
+        // 방법3. 삽입 정렬 (3) - 제일 깔끔한 코드 !
+        for (int i=1; i<N; i++) {
+            int tmp = arr[i];
+            int j=0;
+
+            for (j=i-1; j>=0 && arr[j]>tmp ; j--) {
+                arr[j+1] = arr[j];
             }
 
             arr[j+1] = tmp;
