@@ -27,13 +27,19 @@ public class P06_장난꾸러기 {
         }
 
         // 로직
+        // 배열 복사하기 !
+        // 방법1-1. for문 돌면서 배열 복사
         int[] copy = new int[arr.length];
         for (int i=0; i<arr.length; i++) {
             copy[i] = arr[i];
         }
 
+        // 방법1-2. arr.clone(); 사용
+//        int[] copy = arr.clone();
+
         Arrays.sort(copy);
 
+        // arr 배열과 copy 배열에서 다른 index 2개 찾기
         int first = -1;
         int second = -1;
         for (int i=0; i<N; i++) {
@@ -47,5 +53,32 @@ public class P06_장난꾸러기 {
         }
 
         System.out.println(first+" "+second);
+    }
+
+    public static void main2(String[] args) throws Exception {
+        // 초기 세팅
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+        int[] arr = new int[N];
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for (int i=0; i<N; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
+        }
+
+        // 로직
+        // 배열 복사하기 !
+        int[] copy = arr.clone();
+
+        Arrays.sort(copy);
+
+        // arr 배열과 copy 배열에서 다른 index 2개 찾기 : ArrayList 사용
+        ArrayList<Integer> answer = new ArrayList<>();
+        for (int i=0; i<N; i++) {
+            if (arr[i] != copy[i]) {
+                answer.add(i+1);
+            }
+        }
+
+        System.out.println(answer.get(0)+" "+answer.get(1));
     }
 }
