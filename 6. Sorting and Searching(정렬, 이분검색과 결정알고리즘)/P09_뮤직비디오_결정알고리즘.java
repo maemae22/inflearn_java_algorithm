@@ -26,13 +26,18 @@ public class P09_뮤직비디오_결정알고리즘 {
         int M = Integer.parseInt(st.nextToken());
         int[] arr = new int[N];
         st = new StringTokenizer(br.readLine());
-        int total = 0;
-        int max = 0;
+        int max = 0; // 배열에서의 최댓값
+        int total = 0; // 배열의 총합
         for (int i=0; i<N; i++) {
             arr[i] = Integer.parseInt(st.nextToken());
             total += arr[i];
             max = Math.max(max, arr[i]);
         }
+
+        // ⭐ 배열에서의 최댓값, 배열의 총합 구하는 다른 방법 : Arrays.stream(arr) 사용
+//        int max = Arrays.stream(arr).max().getAsInt(); // Arrays.stream(arr).max().getAsInt();
+//        int total = Arrays.stream(arr).sum(); // Arrays.stream(arr).sum();
+
 
         // 로직
         int answer = 0;
