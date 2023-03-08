@@ -28,11 +28,32 @@ public class P08_이분검색 {
         int index = -1;
 
         // M이 정렬된 상태에서 몇 번째에 있는지 구하기
+        /*
+        // 방법1. for문을 돌면서 찾기
         for (int i=0; i<N; i++) {
             if (arr[i] == M) {
                 index = i+1;
+                break;
             }
         }
+         */
+
+        // 방법2. 이분 탐색(이진 탐색, Binary Search)으로 찾기
+        // cf. 이분 탐색(이진 탐색) 설명 : https://velog.io/@kimdukbae/%EC%9D%B4%EB%B6%84-%ED%83%90%EC%83%89-%EC%9D%B4%EC%A7%84-%ED%83%90%EC%83%89-Binary-Search
+        int lt = 0;
+        int rt = arr.length -1;
+
+        while (index == -1) { // 조건을 while (lt <= rt) 로 해도 됨 !
+            int mid = (lt+rt) / 2;
+            if (arr[mid] == M) {
+                index = mid+1;
+            } else if (arr[mid] < M) {
+                lt = mid+1;
+            } else { // M < arr[mid]
+                rt = mid-1;
+            }
+        }
+
 
         // 출력
         System.out.println(index);
