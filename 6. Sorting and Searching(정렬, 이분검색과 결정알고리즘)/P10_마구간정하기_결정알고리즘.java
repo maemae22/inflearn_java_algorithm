@@ -14,6 +14,7 @@ ex.
  */
 public class P10_마구간정하기_결정알고리즘 {
 
+    // 방법1.
     public static void main(String[] args) throws Exception {
         // 초기세팅
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -69,6 +70,66 @@ public class P10_마구간정하기_결정알고리즘 {
         }
 
         if (count >= C-1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // 방법2. (이 코드가 더 깔끔함 ..!)
+    public static void main2(String[] args) throws Exception {
+        // 초기세팅
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int C = Integer.parseInt(st.nextToken());
+        int[] arr = new int[N];
+        st = new StringTokenizer(br.readLine());
+        for (int i=0; i<N; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
+        }
+
+        // 로직
+
+        // ⭐ 결정 알고리즘
+        Arrays.sort(arr);
+
+        int answer = 0;
+        int lt = 1;
+//        int rt = Arrays.stream(arr).max().getAsInt();
+        int rt = arr[arr.length-1];
+
+        while (lt <= rt) {
+            int mid = (lt+rt) / 2;
+            if (canSize(arr, mid, C)) {
+                answer = mid;
+                lt = mid+1;
+            } else {
+                rt = mid-1;
+            }
+        }
+
+        // 출력
+        System.out.println(answer);
+    }
+
+    // 마구간의 좌표 배열(arr)이 주어졌을 때, 최소 between 만큼의 간격으로 C 마리의 말을 넣을 수 있는지 판별하는 메서드
+    // 가능하면 true, 불가능하면 false를 반환한다.
+    public static boolean canSize(int[] arr, int between, int C) {
+        int point = arr[0]; // 기준이 되는 좌표, 직전 좌표를 뜻한다.
+        int count = 1; // 말의 개수
+
+        for (int i=1; i<arr.length; i++) {
+            if (arr[i] - point >= between) {
+                count++;
+                point = arr[i];
+            }
+            if (count >= C) {
+                break;
+            }
+        }
+
+        if (count >= C) {
             return true;
         } else {
             return false;
