@@ -27,6 +27,7 @@ public class P04_LRU_LeastRecentlyUsed {
 
         // 로직
         int[] answer = new int[S];
+        // 방법1. (방법2와 로직은 동일)
         for (int i=0; i<N; i++) {
             int push = arr[i];
             int index = indexArray(answer, push);
@@ -42,6 +43,31 @@ public class P04_LRU_LeastRecentlyUsed {
             }
             answer[0] = push;
         }
+
+        /*
+        // 방법2.
+        for (int i=0; i<N; i++) {
+            int index = -1;
+            for (int j=0; j<answer.length; j++) {
+                if (answer[j] == arr[i]) {
+                    index = j;
+                }
+            }
+
+            if (index == -1) {
+                for (int k=answer.length-1; k>=1; k--) {
+                    answer[k] = answer[k-1];
+                }
+            } else {
+                for (int k=index; k>=1; k--) {
+                    answer[k] = answer[k-1];
+                }
+            }
+
+            answer[0] = arr[i];
+        }
+         */
+
 
         // 출력 : answer 배열 출력
         StringBuilder sb = new StringBuilder();
