@@ -25,4 +25,25 @@ public class P04_피보나치수열_재귀_메모이제이션 {
         }
     }
 
+
+    // 방법1. for문으로 출력 (재귀함수)
+    public static void main1(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+
+        // Pibo1 함수를 N번 호출.. 매우 느림
+        for (int i=1; i<=N; i++) {
+            System.out.print(Pibo1(i)+" ");
+        }
+    }
+
+    // 피보나치 수열의 N번째 항 1개만 return. (숫자 하나)
+    public static int Pibo1(int N) {
+        if (N==1 || N==2) {
+            return 1;
+        } else {
+            return Pibo1(N-2) + Pibo1(N-1);
+        }
+    }
+
 }
