@@ -46,4 +46,30 @@ public class P04_피보나치수열_재귀_메모이제이션 {
         }
     }
 
+
+    // 방법2. ⭐ static 변수 활용
+    static int[] arr2;
+
+    public static void main2(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+
+        arr2 = new int[N+1];
+
+        // 함수 1번만 호출 !
+        Pibo2(N);
+
+        for (int i=1; i<=N; i++) {
+            System.out.print(arr2[i] + " ");
+        }
+    }
+
+    public static int Pibo2(int N) {
+        if (N==1 || N==2) {
+            return arr2[N] = 1; // ⭐
+        } else {
+            return arr2[N] = Pibo2(N-2) + Pibo2(N-1); // ⭐
+        }
+    }
+
 }
