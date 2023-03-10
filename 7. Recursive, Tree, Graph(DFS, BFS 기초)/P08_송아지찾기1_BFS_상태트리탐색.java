@@ -26,7 +26,10 @@ public class P08_송아지찾기1_BFS_상태트리탐색 {
          */
 
         // 방법2. BFS 상태트리탐색 (최단거리 BFS)
-        System.out.println(BFS(S, E));
+//        System.out.println(BFS(S, E));
+
+        // 방법3. BFS 상태트리탐색 (최단거리 BFS) - (2) : 로직 자체는 방법2와 동일, 배열 사용 및 코드 리팩토링 !
+        System.out.println(BFS2(S, E));
     }
 
     // 방법1. 직접 계산
@@ -78,4 +81,41 @@ public class P08_송아지찾기1_BFS_상태트리탐색 {
 
         return level;
     }
+
+    // 방법3. BFS 상태트리탐색 (최단거리 BFS) - (2) : 로직 자체는 방법2와 동일, 배열 사용 및 코드 리팩토링 !
+    public static int BFS2(int S, int E) {
+        Queue<Integer> q = new LinkedList<>();
+        int[] check = new int[10001];
+        int[] go = {-1, 1, 5}; // = 한 번의 점프로 앞으로 1, 뒤로 1, 앞으로 5를 이동할 수 있다.
+
+        // 0번째 세팅
+        q.offer(S);
+        check[S] = 1;
+        int level = 0;
+
+//        while (!q.isEmpty()) {
+        while (true) {
+            int size = q.size();
+            for (int i=0; i<size; i++) {
+                int tmp = q.poll();
+//                if (tmp == E) {
+//                    return level;
+//                }
+
+                for (int j=0; j<go.length; j++) {
+                    int nx = tmp + go[j];
+                    if (nx == E) {
+                        return level + 1;
+                    }
+                    if (check[nx]==0 && 1<=nx && nx<=10000) {
+                        q.offer(nx);
+                        check[nx] = 1;
+                    }
+                }
+            }
+            level++;
+        }
+
+    }
+
 }
