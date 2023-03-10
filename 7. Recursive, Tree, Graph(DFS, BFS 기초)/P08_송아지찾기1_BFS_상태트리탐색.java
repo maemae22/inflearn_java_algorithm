@@ -19,8 +19,14 @@ public class P08_송아지찾기1_BFS_상태트리탐색 {
         int S = Integer.parseInt(st.nextToken());
         int E = Integer.parseInt(st.nextToken());
 
+        /*
+        // 방법1. 직접 계산
         int go = E-S;
         System.out.println(calculate(go));
+         */
+
+        // 방법2. BFS 상태트리탐색 (최단거리 BFS)
+        System.out.println(BFS(S, E));
     }
 
     // 방법1. 직접 계산
@@ -39,5 +45,37 @@ public class P08_송아지찾기1_BFS_상태트리탐색 {
             }
             return count;
         }
+    }
+
+    // 방법2. BFS 상태트리탐색 (최단거리 BFS)
+    public static int BFS(int S, int E) {
+        Queue<Integer> q = new LinkedList<>();
+        HashMap<Integer, Integer> checkMap = new HashMap<>();
+
+        q.offer(S);
+        int level = 0;
+
+        while(!q.contains(E)) {
+            int size = q.size();
+            for (int i=0; i<size; i++) {
+                int tmp = q.poll();
+
+                if (!checkMap.containsKey(tmp-1)) {
+                    q.offer(tmp-1);
+                    checkMap.put(tmp-1, level);
+                }
+                if (!checkMap.containsKey(tmp+1)) {
+                    q.offer(tmp+1);
+                    checkMap.put(tmp+1, level);
+                }
+                if (!checkMap.containsKey(tmp+5)) {
+                    q.offer(tmp+5);
+                    checkMap.put(tmp+5, level);
+                }
+            }
+            level++;
+        }
+
+        return level;
     }
 }
