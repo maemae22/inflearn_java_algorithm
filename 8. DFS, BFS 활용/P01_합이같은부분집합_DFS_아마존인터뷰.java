@@ -15,8 +15,7 @@ public class P01_합이같은부분집합_DFS_아마존인터뷰 {
 
     static int total;
     static int[] arr;
-    static String answer;
-    static int count;
+    static String answer = "NO";
     static int sum;
     static int N;
 
@@ -31,27 +30,52 @@ public class P01_합이같은부분집합_DFS_아마존인터뷰 {
             total += arr[i];
         }
 
-        count = 0;
+        int index = 0;
         sum = 0;
-        answer = "NO";
 
-        DFS(count);
+//        DFS(index);
+        DFSDFS(index, 0);
         System.out.println(answer);
     }
 
-    public static void DFS(int count) {
-        if (sum*2 > total || count==N) {
+    // 방법1.
+    public static void DFS(int index) {
+        if (sum*2 > total || index==N) {
             return;
         } else {
-            sum += arr[count];
+            sum += arr[index];
             if (sum*2 == total) {
                 answer = "YES";
                 return;
             }
-            DFS(count+1);
+            DFS(index+1);
 
-            sum -= arr[count];
-            DFS(count+1);
+            sum -= arr[index];
+            DFS(index+1);
         }
     }
+
+    // 방법2. (코드 훨씬 깔끔함 ..!)
+    static boolean flag = false;
+
+    public static void DFSDFS(int index, int summ) {
+        if (flag) {
+            return;
+        }
+
+        if (summ*2 > total) {
+            return;
+        }
+
+        if (index == N) {
+            if (summ*2 == total) {
+                answer = "YES";
+                flag = true;
+            }
+        } else {
+            DFSDFS(index+1, summ+arr[index]);
+            DFSDFS(index+1, summ);
+        }
+    }
+
 }
