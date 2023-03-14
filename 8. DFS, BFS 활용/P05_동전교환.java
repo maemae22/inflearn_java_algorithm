@@ -16,20 +16,30 @@ ex.
 public class P05_동전교환 {
 
     static int N, total, answer;
-    static int[] coins;
+    static Integer[] coins;
 
     public static void main(String[] args) throws Exception {
+        // 초기 세팅
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
-        coins = new int[N];
+        coins = new Integer[N];
         StringTokenizer st = new StringTokenizer(br.readLine());
         for (int i=0; i<N; i++) {
             coins[i] = Integer.parseInt(st.nextToken());
         }
         total = Integer.parseInt(br.readLine());
 
-        // 로직 & 출력
-        BFS();
+        // 로직
+        Arrays.sort(coins, Collections.reverseOrder()); // coins 내림차순 정렬 (int[] 배열이 아닌 Integer[] 배열이여야 함 !!)
+
+        // 방법1. BFS
+//        BFS();
+
+        // 방법2. DFS
+        answer = total;
+        DFS(0, 0);
+
+        // 출력
         System.out.println(answer);
     }
 
@@ -56,4 +66,19 @@ public class P05_동전교환 {
             count++;
         }
     }
+
+    public static void DFS(int count, int sum) {
+        if (sum > total || count >= answer) {
+            return;
+        }
+
+        if (sum == total) {
+            answer = Math.min(answer, count);
+        } else {
+            for (int i=0; i<N; i++) {
+                DFS(count+1, sum+coins[i]);
+            }
+        }
+    }
+
 }
