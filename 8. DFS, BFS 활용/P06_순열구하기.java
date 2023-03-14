@@ -29,11 +29,10 @@ public class P06_순열구하기 {
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
         arr = new int[N];
-        check = new int[11];
+        check = new int[N];
         st = new StringTokenizer(br.readLine());
         for (int i=0; i<N; i++) {
             arr[i] = Integer.parseInt(st.nextToken());
-            check[arr[i]] = 1;
         }
 
         answer = new int[M];
@@ -48,11 +47,11 @@ public class P06_순열구하기 {
             System.out.println();
         } else {
             for (int i=0; i<N; i++) {
-                if (check[arr[i]]==1) {
+                if (check[i]==0) {
                     answer[level] = arr[i];
-                    check[arr[i]] = 0;
+                    check[i] = 1;
                     DFS(level+1);
-                    check[arr[i]] = 1;
+                    check[i] = 0;
                 }
             }
         }
