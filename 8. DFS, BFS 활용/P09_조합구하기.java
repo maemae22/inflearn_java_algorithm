@@ -18,7 +18,6 @@ public class P09_조합구하기 {
 
     static int N, M;
     static int[] answer;
-    static int[] check;
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -27,7 +26,6 @@ public class P09_조합구하기 {
         M = Integer.parseInt(st.nextToken());
 
         answer = new int[M];
-        check = new int[N+1];
         DFS(0, 1);
     }
 
@@ -39,12 +37,8 @@ public class P09_조합구하기 {
             System.out.println();
         } else {
             for (int i=min; i<=N; i++) {
-                if (check[i] == 0) {
-                    check[i] = 1;
-                    answer[index] = i;
-                    DFS(index+1, i+1);
-                    check[i] = 0;
-                }
+                answer[index] = i;
+                DFS(index+1, i+1);
             }
         }
     }
