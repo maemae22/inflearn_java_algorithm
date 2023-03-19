@@ -19,7 +19,8 @@ ex.
  */
 public class P01_씨름선수 {
 
-    public static void main(String[] args) throws Exception {
+    // 방법1. 이중 for문 ( O(n제곱) )
+    public static void main1(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
         int[] keys = new int[N];
@@ -44,5 +45,47 @@ public class P01_씨름선수 {
         }
 
         System.out.println(answer);
+    }
+
+    // 방법2. 정렬 이용 ( O(n) )
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+        ArrayList<Player> players = new ArrayList<>();
+        for (int i=0; i<N; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int key = Integer.parseInt(st.nextToken());
+            int mom = Integer.parseInt(st.nextToken());
+            players.add(new Player(key, mom));
+        }
+
+        Collections.sort(players, Collections.reverseOrder());
+
+        int max = 0;
+        int answer = 0;
+        for (Player tmp : players) {
+            if (tmp.mom >= max) {
+                max = tmp.mom;
+                answer++;
+            }
+        }
+
+        System.out.println(answer);
+    }
+}
+
+class Player implements Comparable<Player> {
+    int key;
+    int mom;
+
+    public Player (int key, int mom) {
+        this.key = key;
+        this.mom = mom;
+    }
+
+    // Person 정렬기준 : 키 (오름차순 정렬)
+    @Override
+    public int compareTo(Player o) {
+        return this.key - o.key;
     }
 }
