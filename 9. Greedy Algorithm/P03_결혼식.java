@@ -22,7 +22,7 @@ ex.
  */
 public class P03_결혼식 {
 
-    // 배열 2개로 풀이
+    // 방법1. 배열 2개로 풀이
     public static void main(String[] args) throws Exception {
         // 초기 세팅
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -48,5 +48,56 @@ public class P03_결혼식 {
 
         // 출력
         System.out.println(max);
+    }
+
+    // 방법2. 따로 Class 및 ArrayList 만들어서 정렬 후 풀이
+    public static void main2(String[] args) throws Exception {
+        // 초기 세팅
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+        ArrayList<Go> gos = new ArrayList<>();
+        for (int i=0; i<N; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int start = Integer.parseInt(st.nextToken());
+            int end = Integer.parseInt(st.nextToken());
+            gos.add(new Go(start, 's'));
+            gos.add(new Go(end, 'e'));
+        }
+
+        // 로직
+        Collections.sort(gos);
+
+        int max = 0;
+        int count = 0;
+        for (Go go : gos) {
+            if (go.status == 's') {
+                count++;
+            } else {
+                count--;
+            }
+            max = Math.max(count, max);
+        }
+
+        // 출력
+        System.out.println(max);
+    }
+}
+
+class Go implements Comparable<Go> {
+    int time;
+    char status;
+
+    public Go(int time, char status) {
+        this.time = time;
+        this.status = status;
+    }
+
+    @Override
+    public int compareTo(Go o) {
+        if (this.time != o.time) {
+            return this.time - o.time;
+        } else {
+            return this.status - o.status;
+        }
     }
 }
