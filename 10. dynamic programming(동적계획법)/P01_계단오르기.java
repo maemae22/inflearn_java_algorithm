@@ -12,7 +12,8 @@ public class P01_계단오르기 {
     static int answer;
     static int N;
 
-    public static void main(String[] args) throws Exception {
+    // 방법1. DFS 풀이법 사용
+    public static void main1(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
 
@@ -31,5 +32,21 @@ public class P01_계단오르기 {
             DFS(sum+1);
             DFS(sum+2);
         }
+    }
+
+    // 방법2. 동적계획법 (DP) 풀이법 사용
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+
+        int[] dp = new int[N+1];
+        dp[1] = 1;
+        dp[2] = 2;
+        for (int i=3; i<=N; i++) {
+            // i번째 계단으로 가는 방법은 = i-2번째 계단에서 두 계단 올라가는거 + i-1번째 계단에서 한 계단 올라가는 것임
+            dp[i] = dp[i-2] + dp[i-1];
+        }
+
+        System.out.println(dp[N]);
     }
 }
