@@ -7,14 +7,14 @@ import java.io.*;
 public class P04_피보나치수열_재귀_메모이제이션 {
 
     // 방법0. 배열 사용
-    public static void main0(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
 
         // 피보나치 수열 만들기
         int[] answer = new int[N+1];
         answer[1] = 1;
-        answer[2] = 2;
+        answer[2] = 1;
         for (int i=3; i<=N; i++) {
             answer[i] = answer[i-2] + answer[i-1];
         }
