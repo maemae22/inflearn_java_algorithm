@@ -15,6 +15,15 @@
       <sourceFolder url="file://$MODULE_DIR$/9. Greedy Algorithm" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/0. 기본" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/섹션 1. 시뮬레이션 &amp; 구현" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/섹션 2. 해싱 &amp; 시간파싱" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/섹션 3. 자료구조 활용" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/섹션 4. Sorting &amp; Thinking" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/섹션 5. greedy(탐욕법)" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/섹션 6. 깊이우선탐색(DFS)" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/섹션 7. 너비우선탐색(BFS)" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/섹션 8. 그래프 알고리즘" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/섹션 9. 다이나믹 프로그래밍(DP)" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
