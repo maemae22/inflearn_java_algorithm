@@ -2,34 +2,41 @@ import java.util.*;
 
 public class P08_회의실만남 {
     public int[] solution(int[] enter, int[] exit){
-        int n = enter.length;
-        for(int i = 0; i < n; i++){
-            enter[i]--;
-            exit[i]--;
+        int N = enter.length;
+        int[] answer = new int[N];
+        int[] income = new int[N]; // income[i] = i번째 사람이 들어온 순서
+        int[] enterT = new int[N]; // enterT[i] = i번째 사람이 들어온 시각
+        int[] outT = new int[N]; // outT[i] = i번째 사람이 나간 시각
+
+        for (int i=0; i<enter.length; i++) {
+            income[enter[i]-1] = i;
         }
-        int[] enterIdx = new int[n];
-        for(int i = 0; i < n; i++){
-            enterIdx[enter[i]] = i;
-        }
-        int[] enterT = new int[n];
-        int[] exitT = new int[n];
-        int cnt = 0;
-        for(int i = 0, j = 0; i < n; i++){
-            while(j < n && j <= enterIdx[exit[i]]){
-                enterT[enter[j]] = cnt++;
-                j++;
+
+        int time = 0;
+        int incomeIndex = 0;
+        for (int out : exit) {
+            int outPerson = out-1;
+            while (incomeIndex<=income[outPerson]) {
+                int incomePerson = enter[incomeIndex++] -1;
+                enterT[incomePerson] = time++;
             }
-            exitT[exit[i]] = cnt++;
+            outT[outPerson] = time++;
         }
-        int[] answer = new int[n];
-        for(int i = 0; i < n; i++){
-            for(int j = i + 1; j < n; j++){
-                if(!(exitT[i] < enterT[j] || exitT[j] < enterT[i])){
+
+//        System.out.println("income = "+Arrays.toString(income));
+//        System.out.println("enterT = "+Arrays.toString(enterT));
+//        System.out.println("outT = "+Arrays.toString(outT));
+
+        for (int i=0; i<N; i++) {
+            for (int j=i+1; j<N; j++) {
+                if (!(outT[j]<enterT[i] || outT[i]<enterT[j])) {
                     answer[i]++;
                     answer[j]++;
+//                    System.out.println(i+"와 "+j+"가 만남");
                 }
             }
         }
+
         return answer;
     }
 
