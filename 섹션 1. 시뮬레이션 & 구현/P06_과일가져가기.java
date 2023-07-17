@@ -1,60 +1,59 @@
 import java.util.*;
 
 public class P06_과일가져가기 {
-    public int getMin(int[] fruit){
-        int min = 100;
-        for(int x : fruit){
-            min = Math.min(min, x);
-        }
-        return min;
-    }
-    public Boolean isMinUnique(int[] fruit){
-        int cnt = 0;
-        int min = getMin(fruit);
-        for(int x : fruit){
-            if(x == min) cnt++;
-        }
-        return cnt == 1;
-    }
-    public int getMinIndex(int[] fruit){
-        int min = getMin(fruit);
-        for(int i = 0; i < 3; i++){
-            if(fruit[i] == min) return i;
-        }
-        return 0;
-    }
-    public int solution(int[][] fruit){
+
+    // 문제 분석 : 서로 교환했을 때 이득이 나는 조건
+    // 조건1. 각 학생의 최솟값이 유니크(유일)해야 한다.
+    // 조건2. 서로 교환하려고 하는 두 학생의 최솟값인 과일이 서로 달라야 한다.
+    // 조건3. 교환했을 때 1개 증가한 과일의 개수가 그대로 최솟값을 유지해야 한다.
+    // 조건4. 각 학생은 1번만 교환할 수 있다.
+    public int solution(int[][] fruit) {
+        int N = fruit.length;
         int answer = 0;
-        int n = fruit.length;
-        int[] ch = new int[n];
-        for(int i = 0; i < n; i++){
-            if(ch[i] == 1) continue;
-            if(isMinUnique(fruit[i]) == false) continue;
-            for(int j = i+1; j < n; j++){
-                if(ch[j] == 1) continue;
-                if(isMinUnique(fruit[j]) == false) continue;
-                int a = getMinIndex(fruit[i]);
-                int b = getMinIndex(fruit[j]);
-                if(a != b && fruit[i][b] > 0 && fruit[j][a] > 0){
-                    if(fruit[i][a] + 1 <= fruit[i][b] - 1 && fruit[j][b] + 1 <= fruit[j][a] - 1){
-                        fruit[i][a]++;
-                        fruit[i][b]--;
-                        fruit[j][b]++;
-                        fruit[j][a]--;
-                        ch[i] = 1;
-                        ch[j] = 1;
+
+        // 조건에 맞지 않아 교환이 불가능하거나 이미 교환했을 경우 -1, 교환이 가능한 상태라면 fruit이 최소값인 index를 저장
+        int[] check = new int[N];
+
+        for (int i=0; i<N; i++) {
+            int[] arr = new int[3];
+            for (int j=0; j<3; j++) {
+                arr[j] = fruit[i][j];
+            }
+            Arrays.sort(arr);
+
+            if (arr[0]!=arr[1]) { // 조건1 확인
+                for (int j=0; j<3; j++) {
+                    if (arr[0]==fruit[i][j]) {
+                        check[i] = j;
+                        break;
+                    }
+                }
+            } else {
+                check[i] = -1;
+            }
+            answer += arr[0];
+        }
+
+        for (int i=0; i<N; i++) {
+            if (check[i]!=-1) { // 조건4 확인
+                for (int j=i+1; j<N; j++) {
+                    if (check[j]!=-1 && check[i]!=check[j] // 조건4 확인 & 조건2 확인
+                            && fruit[i][check[j]]>0 && fruit[j][check[i]]>0 // 교환해줄 수 있는지 확인
+                            && fruit[i][check[i]]+1<=fruit[i][check[j]]-1 && fruit[j][check[j]]+1<=fruit[j][check[i]]-1) { // 조건3 확인
+                        check[i] = -1;
+                        check[j] = -1;
+                        answer += 2;
+//                        System.out.print(i+"와 "+j+"를 교환함 / ");
                         break;
                     }
                 }
             }
         }
-        for(int[] x : fruit){
-            answer += getMin(x);
-        }
+
         return answer;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         P06_과일가져가기 T = new P06_과일가져가기();
         System.out.println(T.solution(new int[][]{{10, 20, 30}, {12, 15, 20}, {20, 12, 15}, {15, 20, 10}, {10, 15, 10}}));
         System.out.println(T.solution(new int[][]{{10, 9, 11}, {15, 20, 25}}));
