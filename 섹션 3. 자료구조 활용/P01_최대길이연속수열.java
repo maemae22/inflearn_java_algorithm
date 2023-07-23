@@ -3,14 +3,19 @@ import java.util.*;
 public class P01_최대길이연속수열 {
     public int solution(int[] nums) {
         Arrays.sort(nums);
-        int answer = 0;
+        int answer = 1;
         int count = 1;
         int last = nums[0];
+
         for (int i=1; i<nums.length; i++) {
+            if (nums[i]==last) {
+                continue;
+            }
+
             if (nums[i]==last+1) {
                 count++;
-            } else {
                 answer = Math.max(answer, count);
+            } else {
                 count = 1;
             }
             last = nums[i];
