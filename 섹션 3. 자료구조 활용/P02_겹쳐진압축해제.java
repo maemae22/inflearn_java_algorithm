@@ -3,33 +3,44 @@ import java.util.*;
 public class P02_겹쳐진압축해제 {
 
     public String solution(String s) {
-        String answer = "";
-        Stack<String> st = new Stack<>();
-        for(Character x : s.toCharArray()){
-            if(x == ')'){
+
+        Stack<String> stack = new Stack<>();
+        for (int i=0; i<s.length(); i++) {
+            if (s.charAt(i)!=')') {
+                stack.add(String.valueOf(s.charAt(i)));
+            } else {
                 String tmp = "";
-                while(!st.empty()){
-                    String c = st.pop();
-                    if(c.equals("(")){
-                        String num = "";
-                        while(!st.empty() && Character.isDigit(st.peek().charAt(0))){
-                            num = st.pop() + num;
-                        }
-                        String res = "";
-                        int cnt = 0;
-                        if(num.equals("")) cnt = 1;
-                        else cnt = Integer.parseInt(num);
-                        for(int i = 0; i < cnt; i++) res += tmp;
-                        st.push(res);
-                        break;
-                    }
-                    tmp = c + tmp;
+                while (!stack.peek().equals("(")) {
+                    tmp = stack.pop() + tmp;
+                }
+                stack.pop(); // ( 제거
+                String num = "";
+                while (!stack.isEmpty() && Character.isDigit(stack.peek().charAt(0))) {
+                    num = stack.pop() + num;
+                }
+
+                if (num.equals("")) {
+                    stack.add(tmp);
+                } else {
+                    int count = Integer.parseInt(num);
+                    stack.add(repeatString(count, tmp));
                 }
             }
-            else st.push(String.valueOf(x));
         }
-        for(String x : st) answer += x;
-        return answer;
+
+        StringBuilder sb = new StringBuilder();
+        for (String tmp : stack) {
+            sb.append(tmp);
+        }
+        return sb.toString();
+    }
+
+    public String repeatString(int count, String tmp) {
+        StringBuilder sb = new StringBuilder();
+        for (int i=0; i<count; i++) {
+            sb.append(tmp);
+        }
+        return sb.toString();
     }
 
     public static void main(String[] args) {
