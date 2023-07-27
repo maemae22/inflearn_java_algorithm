@@ -1,40 +1,44 @@
 import java.util.*;
 
 public class P04_피부과 {
+    public int solution(int[] laser, String[] enter) {
 
-    public int getTime(String time) {
-        int H = Integer.parseInt(time.split(":")[0]);
-        int M = Integer.parseInt(time.split(":")[1]);
-        return H*60+M;
+        int[] enterTime = new int[enter.length];
+        int[] enterLaser = new int[enter.length];
+        for (int i=0; i<enter.length; i++) {
+            String time = enter[i].split(" ")[0];
+            enterTime[i] = stringTimeToInt(time);
+            enterLaser[i] = laser[Integer.parseInt(enter[i].split(" ")[1])];
+        }
+
+        int answer = 0;
+        int now = 1; // 현재 몇명 대기하고 있는지
+        int index = 0; // 치료받을 사람
+        int time = enterTime[0]; // 현재 시간
+        int wait = 1; // 대기 몇번까지
+
+        while (index<enter.length) {
+            if (enterTime[index]<=time) {
+                now--;
+                time += enterLaser[index++];
+            } else {
+                time = enterTime[index] + enterLaser[index++];
+                wait++;
+            }
+            while (wait<enter.length && enterTime[wait]<time) {
+                now++;
+                wait++;
+            }
+            answer = Math.max(answer, now);
+        }
+
+        return answer;
     }
 
-    public int solution(int[] laser, String[] enter) {
-        int answer = 0;
-        int n = enter.length;
-        int[][] inList = new int[n][2];
-        for(int i = 0; i < n; i++){
-            int a = getTime(enter[i].split(" ")[0]);
-            int b = Integer.parseInt(enter[i].split(" ")[1]);
-            inList[i][0] = a;
-            inList[i][1] = b;
-        }
-        Queue<Integer> Q = new LinkedList<>();
-        Q.offer(inList[0][1]);
-        int fT = inList[0][0];
-        int pos = 1;
-        for(int t = fT; t <= 1200; t++){
-            if(pos < n && t == inList[pos][0]){
-                if(Q.isEmpty() && inList[pos][0] > fT) fT= inList[pos][0];
-                Q.offer(inList[pos][1]);
-                pos++;
-            }
-            if(t == fT && !Q.isEmpty()){
-                int idx = Q.poll();
-                fT += laser[idx];
-            }
-            answer = Math.max(answer, Q.size());
-        }
-        return answer;
+    public int stringTimeToInt(String time) {
+        int hour = Integer.parseInt(time.substring(0, 2));
+        int minute = Integer.parseInt(time.substring(3));
+        return hour*60+minute;
     }
 
     public static void main(String[] args) {
