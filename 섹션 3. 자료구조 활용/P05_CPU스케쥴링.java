@@ -21,15 +21,9 @@ public class P05_CPU스케쥴링 {
                 answer[count++] = tmp.num;
             }
 
-            while (count<tasks.length && !all.isEmpty()) {
+            while (count<tasks.length && !all.isEmpty() && all.peek().start<=time) {
                 AllCpu tmp = all.poll();
-//                System.out.println(tmp.num + "/" + tmp.start + "/" + tmp.time);
-                if (tmp.start<=time) {
-                    wait.add(new WaitCpu(tmp.num, tmp.start, tmp.time));
-                } else {
-                    all.offer(tmp);
-                    break;
-                }
+                wait.add(new WaitCpu(tmp.num, tmp.start, tmp.time));
             }
         }
 
