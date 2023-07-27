@@ -5,31 +5,29 @@ public class P05_CPU스케쥴링 {
         int[] answer = new int[tasks.length];
         int time = 0;
         int count = 0;
-        TreeSet<WaitCpu> wait = new TreeSet<>();
-        List<AllCpu> all = new ArrayList<>();
+        PriorityQueue<WaitCpu> wait = new PriorityQueue<>();
+        PriorityQueue<AllCpu> all = new PriorityQueue<>();
 
         for (int i=0; i<tasks.length; i++) {
-            all.add(new AllCpu(i, tasks[i][0], tasks[i][1]));
+            all.offer(new AllCpu(i, tasks[i][0], tasks[i][1]));
         }
-        Collections.sort(all);
 
         while (count < tasks.length) {
             if (wait.isEmpty() && !all.isEmpty()) {
-                time = all.get(0).start;
+                time = all.peek().start;
             } else {
-                WaitCpu tmp = wait.pollFirst();
+                WaitCpu tmp = wait.poll();
                 time += tmp.time;
                 answer[count++] = tmp.num;
             }
 
             while (count<tasks.length && !all.isEmpty()) {
-                AllCpu tmp = all.get(0);
+                AllCpu tmp = all.poll();
 //                System.out.println(tmp.num + "/" + tmp.start + "/" + tmp.time);
                 if (tmp.start<=time) {
-                    all.remove(0);
                     wait.add(new WaitCpu(tmp.num, tmp.start, tmp.time));
                 } else {
-                    all.add(0, tmp);
+                    all.offer(tmp);
                     break;
                 }
             }
