@@ -112,7 +112,7 @@ public class P01_가장가까운큰수 {
         Arrays.sort(num);
 
         DFS3(0, 0, new int[num.length]);
-        return answer==Integer.MAX_VALUE ? -1 : answer;
+        return answer;
     }
 
     public void DFS3(int count, int now, int[] check) {
