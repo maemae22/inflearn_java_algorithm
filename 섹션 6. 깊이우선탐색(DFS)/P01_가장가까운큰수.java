@@ -44,6 +44,50 @@ public class P01_가장가까운큰수 {
         }
     }
 
+    public int solution2(int n) {
+        N = n;
+        answer = Integer.MAX_VALUE;
+        String stringNum = String.valueOf(n);
+        num = new int[stringNum.length()];
+        find = false;
+
+        int tmp = n;
+        for (int i=num.length-1; i>=0; i--) {
+            num[i] = tmp%10;
+            tmp /= 10;
+        }
+
+        Arrays.sort(num);
+
+        DFS2(0, new int[num.length], new int[num.length]);
+        return answer==Integer.MAX_VALUE ? -1 : answer;
+    }
+
+    static int front = Integer.parseInt(String.valueOf(String.valueOf(N).charAt(0)));
+    static boolean find;
+    public void DFS2(int count, int[] arr, int[] check) {
+        if (find || count==1 && arr[0]<front) {
+            return;
+        }
+
+        if (count==num.length) {
+            int num = arrayToInt(arr);
+            if (num>N) {
+                answer = num;
+                find = true;
+            }
+        } else {
+            for (int i=0; i<arr.length; i++) {
+                if (check[i]==0) {
+                    arr[count] = num[i];
+                    check[i] = 1;
+                    DFS2(count+1, arr, check);
+                    check[i] = 0;
+                }
+            }
+        }
+    }
+
     public int arrayToInt(int[] arr) {
         int sum = 0;
         for (int i=0; i<arr.length; i++) {
@@ -59,5 +103,11 @@ public class P01_가장가까운큰수 {
         System.out.println(T.solution(20573));
         System.out.println(T.solution(27711));
         System.out.println(T.solution(54312));
+        System.out.println();
+        System.out.println(T.solution2(123));
+        System.out.println(T.solution2(321));
+        System.out.println(T.solution2(20573));
+        System.out.println(T.solution2(27711));
+        System.out.println(T.solution2(54312));
     }
 }
