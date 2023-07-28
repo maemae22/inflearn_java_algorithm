@@ -6,6 +6,14 @@ public class P01_가장가까운큰수 {
     static int N;
     static int[] num;
 
+    public int arrayToInt(int[] arr) {
+        int sum = 0;
+        for (int i=0; i<arr.length; i++) {
+            sum += arr[i]*Math.pow(10, arr.length-i-1);
+        }
+        return sum;
+    }
+
     public int solution(int n) {
         N = n;
         answer = Integer.MAX_VALUE;
@@ -88,12 +96,44 @@ public class P01_가장가까운큰수 {
         }
     }
 
-    public int arrayToInt(int[] arr) {
-        int sum = 0;
-        for (int i=0; i<arr.length; i++) {
-            sum += arr[i]*Math.pow(10, arr.length-i-1);
+    public int solution3(int n) {
+        N = n;
+        answer = -1;
+        String stringNum = String.valueOf(n);
+        num = new int[stringNum.length()];
+        find = false;
+
+        int tmp = n;
+        for (int i=num.length-1; i>=0; i--) {
+            num[i] = tmp%10;
+            tmp /= 10;
         }
-        return sum;
+
+        Arrays.sort(num);
+
+        DFS3(0, 0, new int[num.length]);
+        return answer==Integer.MAX_VALUE ? -1 : answer;
+    }
+
+    public void DFS3(int count, int now, int[] check) {
+        if (find) {
+            return;
+        }
+
+        if (count==num.length) {
+            if (now>N) {
+                answer = now;
+                find = true;
+            }
+        } else {
+            for (int i=0; i<check.length; i++) {
+                if (check[i]==0) {
+                    check[i] = 1;
+                    DFS3(count+1, now*10+num[i], check);
+                    check[i] = 0;
+                }
+            }
+        }
     }
 
     public static void main(String[] args) {
@@ -109,5 +149,11 @@ public class P01_가장가까운큰수 {
         System.out.println(T.solution2(20573));
         System.out.println(T.solution2(27711));
         System.out.println(T.solution2(54312));
+        System.out.println();
+        System.out.println(T.solution3(123));
+        System.out.println(T.solution3(321));
+        System.out.println(T.solution3(20573));
+        System.out.println(T.solution3(27711));
+        System.out.println(T.solution3(54312));
     }
 }
