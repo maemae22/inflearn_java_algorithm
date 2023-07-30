@@ -11,6 +11,7 @@ public class P01_타일점프 {
         Queue<Integer> q = new LinkedList<>();
         q.offer(0);
 
+        int[] check = new int[nums.length];
         int answer = -1;
         int count = 0;
 
@@ -21,8 +22,10 @@ public class P01_타일점프 {
                 for (int i=1; i<=nums[tmp]; i++) {
                     if (tmp+i==target) {
                         return count+1;
+                    } else if (check[tmp+i]==0 && tmp+i<target) {
+                        check[tmp+i]=1;
+                        q.offer(tmp+i);
                     }
-                    q.offer(tmp+i);
                 }
             }
             count++;
