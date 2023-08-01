@@ -28,18 +28,11 @@ public class P04_팰린드롬의경우수 {
         total = 0;
         if (one>1) {
             return new String[0];
-        } else if (one==1) {
-            for (char c : map.keySet()) {
-                if (c==oneChar) {
-                    map.put(c, (map.get(c)-1)/2);
-                } else {
-                    map.put(c, map.get(c)/2);
-                }
-                total += map.get(c);
-            }
         } else {
             for (char c : map.keySet()) {
-                map.put(c, map.get(c)/2);
+                if (one==1 && c==oneChar) {
+                    map.put(c, map.get(c)-1);
+                }
                 total += map.get(c);
             }
         }
@@ -55,7 +48,7 @@ public class P04_팰린드롬의경우수 {
     }
 
     public static void DFS(int count, String now) {
-        if (count==total) {
+        if (count==total/2) {
             String one = now;
             String reverse = new StringBuilder(now).reverse().toString();
             if (oneChar==' ') {
@@ -66,9 +59,9 @@ public class P04_팰린드롬의경우수 {
         } else {
             for (char c : map.keySet()) {
                 if (map.get(c)>0) {
-                    map.put(c, map.get(c)-1);
+                    map.put(c, map.get(c)-2);
                     DFS(count+1, now+c);
-                    map.put(c, map.get(c)+1);
+                    map.put(c, map.get(c)+2);
                 }
             }
         }
