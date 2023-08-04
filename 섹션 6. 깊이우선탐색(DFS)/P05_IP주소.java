@@ -2,34 +2,56 @@ import java.util.*;
 
 public class P05_IP주소 {
 
-    LinkedList<String> tmp;
-    ArrayList<String> res;
+    static List<String> answers;
+    static String letter;
 
-    public void DFS(int start, String s) {
-        if(tmp.size() == 4 && start == s.length()){
-            String Ts = "";
-            for(String x : tmp) Ts += x + ".";
-            res.add(Ts.substring(0, Ts.length()-1));
-        }
-        else{
-            for(int i = start; i < s.length(); i++){
-                if(s.charAt(start) == '0' && i > start) return;
-                String num = s.substring(start, i + 1);
-                if(Integer.parseInt(num) > 255) return;
-                tmp.add(num);
-                DFS(i + 1, s);
-                tmp.pollLast();
+    public String[] solution(String s) {
+        answers = new ArrayList<>();
+        letter = s;
+
+        DFS(0, new ArrayList<Integer>());
+
+        if (answers.size()==0) {
+            return new String[]{};
+        } else {
+            String[] answer = new String[answers.size()];
+            for (int i=0; i<answers.size(); i++) {
+                answer[i] = answers.get(i);
             }
+            return answer;
         }
     }
 
-    public String[] solution(String s) {
-        tmp = new LinkedList<>();
-        res = new ArrayList<>();
-        DFS(0, s);
-        String[] answer = new String[res.size()];
-        for(int i = 0; i < res.size(); i++) answer[i] = res.get(i);
-        return answer;
+    public void DFS(int index, ArrayList<Integer> output) {
+        if (output.size()>4 || (output.size()==4 && index!=letter.length())) {
+            return;
+        }
+
+        if (output.size()==4 && index==letter.length()) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(output.get(0));
+            for (int i=1; i<=3; i++) {
+                sb.append(".").append(output.get(i));
+            }
+            answers.add(sb.toString());
+        } else {
+            if (letter.charAt(index)=='0') {
+                output.add(0);
+                DFS(index+1, output);
+                output.remove(output.size()-1);
+            } else {
+                for (int i=1; i<=3; i++) {
+                    if (index+i<=letter.length()) {
+                        int num = Integer.parseInt(letter.substring(index, index+i));
+                        if (num<=255) {
+                            output.add(num);
+                            DFS(index+i, output);
+                            output.remove(output.size()-1);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public static void main(String[] args) {
