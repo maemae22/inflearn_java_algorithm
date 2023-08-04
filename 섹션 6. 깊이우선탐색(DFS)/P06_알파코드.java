@@ -1,23 +1,33 @@
 import java.util.*;
 
 public class P06_알파코드 {
-    int[] dy;
-    public int DFS(int start, String s){
-        if(dy[start] > 0) return dy[start];
-        if(start < s.length() && s.charAt(start) == '0') return 0;
-        if(start == s.length() -1 || start == s.length()) return 1;
-        else{
-            int res = DFS(start + 1, s);
-            int tmp = Integer.parseInt(s.substring(start, start + 2));
-            if(tmp <= 26) res += DFS(start + 2, s);
-            return dy[start] = res;
-        }
-    }
+
+    static String letter;
+    static int answer;
 
     public int solution(String s) {
-        dy = new int[101];
-        int answer = DFS(0, s);
+        letter = s;
+        answer = 0;
+
+        DFS(0);
         return answer;
+    }
+
+    public void DFS(int index) {
+        if (index==letter.length()) {
+            answer++;
+        } else {
+            if (letter.charAt(index)!='0') {
+                for (int i=1; i<=2; i++) {
+                    if (index+i<=letter.length()) {
+                        int num = Integer.parseInt(letter.substring(index, index+i));
+                        if (1<=num && num<=26) {
+                            DFS(index+i);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public static void main(String[] args) {
