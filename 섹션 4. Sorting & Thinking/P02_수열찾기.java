@@ -2,18 +2,18 @@ import java.util.*;
 
 public class P02_수열찾기 {
     public int[] solution(int[] nums){
-        int[] answer = new int[nums.length / 2];
-        HashMap<Integer, Integer> nH = new HashMap<>();
-        for(int x : nums) nH.put(x, nH.getOrDefault(x, 0) + 1);
-        Arrays.sort(nums);
-        int idx = 0;
-        for(int x : nums){
-            if(nH.get(x) == 0) continue;
-            answer[idx] = x;
-            idx++;
-            nH.put(x, nH.get(x) - 1);
-            nH.put(x*2, nH.get(x*2) - 1);
+        List<Integer> list = new ArrayList<>();
+        for (int tmp : nums) {
+            list.add(tmp);
         }
+        Collections.sort(list);
+        int[] answer = new int[nums.length/2];
+
+        for (int i=0; i<nums.length/2; i++) {
+            answer[i] = list.get(i);
+            list.remove(new Integer(answer[i]*2));
+        }
+
         return answer;
     }
 
