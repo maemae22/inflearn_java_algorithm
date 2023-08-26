@@ -29,6 +29,28 @@ public class P03_카드가져가기 {
         return answer;
     }
 
+    public int solution2(int[] nums, int k) {
+        int[] arr = nums.clone();
+        Arrays.sort(arr);
+
+        int round = nums.length/2;
+        int[] minus = new int[round];
+        for (int i=0; i<round; i++) {
+            minus[i] = arr[i*2+1] - arr[i*2];
+        }
+        Arrays.sort(minus);
+
+        int answer = 0;
+        for (int i=0; i<round; i++) {
+            answer += arr[2*i];
+        }
+        for (int i=0; i<k; i++) {
+            answer += minus[round-1-i];
+        }
+
+        return answer;
+    }
+
     public static void main(String[] args) {
         P03_카드가져가기 T = new P03_카드가져가기();
         System.out.println(T.solution(new int[]{7, 8, 5, 12, 3, 1, 3, 1, 1, 12}, 2));
@@ -36,6 +58,12 @@ public class P03_카드가져가기 {
         System.out.println(T.solution(new int[]{3, 7, 12, 3, 3, 5, 7, 8, 9, 11, 23, 4, 6, 7}, 3));
         System.out.println(T.solution(new int[]{12, 34, 56, 23, 22, 34, 55, 45, 24, 23, 45, 55, 55, 23, 11, 12, 23, 12}, 3));
         System.out.println(T.solution(new int[]{14, 15, 20, 11, 10, 20, 20, 12, 9, 22, 27, 25, 30, 19}, 3));
+        System.out.println();
+        System.out.println(T.solution2(new int[]{7, 8, 5, 12, 3, 1, 3, 1, 1, 12}, 2));
+        System.out.println(T.solution2(new int[]{8, 2, 12, 12, 12, 12, 2, 2}, 2));
+        System.out.println(T.solution2(new int[]{3, 7, 12, 3, 3, 5, 7, 8, 9, 11, 23, 4, 6, 7}, 3));
+        System.out.println(T.solution2(new int[]{12, 34, 56, 23, 22, 34, 55, 45, 24, 23, 45, 55, 55, 23, 11, 12, 23, 12}, 3));
+        System.out.println(T.solution2(new int[]{14, 15, 20, 11, 10, 20, 20, 12, 9, 22, 27, 25, 30, 19}, 3));
     }
 }
 
