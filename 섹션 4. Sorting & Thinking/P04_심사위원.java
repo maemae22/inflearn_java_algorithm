@@ -1,22 +1,26 @@
 import java.util.*;
 
 public class P04_심사위원 {
-    public int getAve(int[] score, int s, int e) {
-        int sum = 0;
-        for(int i = s; i <= e; i++){
-            sum += score[i];
-        }
-        return (int)Math.floor((sum / (e - s + 1)));
-    }
 
     public int solution(int[] score, int k) {
-        int n = score.length;
-        Arrays.sort(score);
-        for(int i = 0; i <= n - k; i++){
-            if(score[i + k - 1] - score[i] <= 10)
-                return getAve(score, i, i + k - 1);
+        int[] scores = score.clone();
+        Arrays.sort(scores);
+
+        int answer = 0;
+        for (int i=0; i<scores.length-k; i++) {
+            int min = scores[i];
+            int max = scores[i+k-1];
+            if (max-min<=10) {
+                int sum = 0;
+                for (int j=i; j<i+k; j++) {
+                    sum += scores[j];
+                }
+                answer = sum/k;
+                break;
+            }
         }
-        return 0;
+
+        return answer;
     }
 
     public static void main(String[] args) {
