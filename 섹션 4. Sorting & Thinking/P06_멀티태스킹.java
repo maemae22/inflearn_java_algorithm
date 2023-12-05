@@ -2,29 +2,32 @@ import java.util.*;
 
 public class P06_멀티태스킹 {
     public int solution(int[] tasks, long k) {
-        int answer = 0;
-        int[] sT = new int[tasks.length + 1];
-        System.arraycopy(tasks, 0, sT, 1, tasks.length);
-        Arrays.sort(sT);
-        int rest = tasks.length;
-        for(int i = 1; i < sT.length; i++){
-            long time = ((long)rest * (sT[i] - sT[i-1]));
-            if(k < time){
-                long idx = k % rest;
-                int cnt = 0;
-                for(int j = 0; j < tasks.length; j++){
-                    if(tasks[j] >= sT[i]){
-                        if(cnt == idx) return j+1;
-                        cnt++;
-                    }
-                }
-            }
-            else{
-                k -= time;
-                rest--;
-            }
+        int count = tasks.length;
+        int[] copy = new int[tasks.length+1];
+//        System.arraycopy(tasks, 0, copy, 1, tasks.length);
+        for (int i=1; i<copy.length; i++) {
+            copy[i] = tasks[i-1];
         }
-        return -1;
+        Arrays.sort(copy);
+
+        int index = -1;
+        long restK = k;
+        for (int i=1; i<copy.length; i++) {
+            long require = (copy[i] - copy[i-1]) * (long)count;
+            if (restK - require < 0) {
+                index = i-1;
+                break;
+            }
+            restK -= require;
+            count--;
+        }
+
+        if (index==-1) {
+            return -1;
+        }
+
+        long find = restK % count;
+        return (int) find+index+1;
     }
 
     public static void main(String[] args) {
