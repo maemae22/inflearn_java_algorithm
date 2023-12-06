@@ -21,17 +21,11 @@ public class P04_연속부분수열 {
         int lt = 0;
         for (int rt=0; rt<N; rt++) {
             now += arr[rt];
+            while (now>M) {
+                now -= arr[lt++];
+            }
             if (now==M) {
                 answer++;
-            } else if (now<M) {
-
-            } else { // now>M
-                while (now>M) {
-                    now -= arr[lt++];
-                }
-                if (now==M) {
-                    answer++;
-                }
             }
         }
 
