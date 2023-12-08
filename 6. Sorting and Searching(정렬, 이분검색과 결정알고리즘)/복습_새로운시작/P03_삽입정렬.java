@@ -14,6 +14,7 @@ public class P03_삽입정렬 {
             arr[i] = Integer.parseInt(st.nextToken());
         }
 
+        /*
         for (int i=1; i<N; i++) {
             int index = 0;
             for (int j=i-1; j>=0; j--) {
@@ -27,6 +28,16 @@ public class P03_삽입정렬 {
                 arr[j] = arr[j-1];
             }
             arr[index] = tmp;
+        }
+         */
+
+        for (int i=1; i<N; i++) {
+            int tmp = arr[i];
+            int index = 0;
+            for (index=i-1; index>=0 && arr[index]>tmp; index--) {
+                arr[index+1] = arr[index];
+            }
+            arr[index+1] = tmp;
         }
 
         for (int tmp : arr) {
