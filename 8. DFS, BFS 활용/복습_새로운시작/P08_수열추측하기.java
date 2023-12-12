@@ -58,7 +58,7 @@ public class P08_수열추측하기 {
         } else if (r==1) {
             return combi[n][r]=n;
         } else {
-            return Combi(n-1, r-1) + Combi(n-1, r);
+            return combi[n][r]=Combi(n-1, r-1) + Combi(n-1, r);
         }
     }
 }
