@@ -34,7 +34,6 @@ public class P12_토마토_BFS활용 {
             }
         }
 
-        int day = 0;
         while (!q.isEmpty()) {
             int size = q.size();
             for (int i=0; i<size; i++) {
@@ -43,23 +42,24 @@ public class P12_토마토_BFS활용 {
                     int nx = tmp.x+dx[k];
                     int ny = tmp.y+dy[k];
                     if (0<=nx && nx<arr.length && 0<=ny && ny<arr[0].length && arr[nx][ny]==0) {
-                        arr[nx][ny]=1;
+                        arr[nx][ny]=arr[tmp.x][tmp.y]+1;
                         q.offer(new Tomato(nx, ny));
                     }
                 }
             }
-            day++;
         }
 
+        int answer = 0;
         for (int i=0; i<arr.length; i++) {
             for (int j=0; j<arr[0].length; j++) {
                 if (arr[i][j]==0) {
                     return -1;
                 }
+                answer = Math.max(answer, arr[i][j]);
             }
         }
 
-        return day-1;
+        return answer-1;
     }
 }
 
