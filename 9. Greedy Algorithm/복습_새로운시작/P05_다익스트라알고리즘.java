@@ -10,10 +10,10 @@ public class P05_다익스트라알고리즘 {
         StringTokenizer st = new StringTokenizer(br.readLine());
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
-
-        ArrayList<ArrayList<Pair>> list = new ArrayList<>();
+        
+        ArrayList<ArrayList<Go>> list = new ArrayList<>();
         for (int i=0; i<=N; i++) {
-            list.add(new ArrayList<Pair>());
+            list.add(new ArrayList<Go>());
         }
 
         for (int i=0; i<M; i++) {
@@ -21,55 +21,50 @@ public class P05_다익스트라알고리즘 {
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
             int c = Integer.parseInt(st.nextToken());
-            list.get(a).add(new Pair(b, c));
+            list.get(a).add(new Go(b, c));
         }
 
         int[] answer = new int[N+1];
-        int[] check = new int[N+1];
         Arrays.fill(answer, Integer.MAX_VALUE);
-        answer[1] = 0;
+        answer[1]=0;
 
-        PriorityQueue<Pair> pQ = new PriorityQueue<>();
-        pQ.offer(new Pair(1, 0));
-
-        while (!pQ.isEmpty()) {
-            Pair tmp = pQ.poll();
-            int index = tmp.index;
-            if (check[index] == 1) {
-                continue;
-            }
-            check[index] = 1;
-            for (int j=0; j<list.get(index).size(); j++) {
-                Pair pair = list.get(index).get(j);
-                if (check[pair.index] == 0) {
-                    answer[pair.index] = Math.min(answer[pair.index], tmp.min+pair.min);
-                    pQ.add(new Pair(pair.index, answer[pair.index]));
+        Queue<Go> q = new LinkedList<>();
+        q.offer(new Go(1, 0));
+        while (!q.isEmpty()) {
+            int size = q.size();
+            for (int i=0; i<size; i++) {
+                Go tmp = q.poll();
+                for (Go next : list.get(tmp.next)) {
+                    int cost = answer[tmp.next] + next.pay;
+                    if (cost<answer[next.next]) {
+                        answer[next.next]=cost;
+                        q.offer(new Go(next.next, cost));
+                    }
                 }
             }
         }
 
-        // 출력
         for (int i=2; i<=N; i++) {
-            if (answer[i] == Integer.MAX_VALUE) {
-                System.out.println(i + " : impossible");
+            System.out.print(i+" : ");
+            if (answer[i]==Integer.MAX_VALUE) {
+                System.out.print("impossible");
             } else {
-                System.out.println(i + " : " + answer[i]);
+                System.out.print(answer[i]);
             }
+            System.out.println();
         }
     }
 }
 
-class Pair implements Comparable<Pair> {
-    int index;
-    int min;
-
-    public Pair(int index, int min) {
-        this.index = index;
-        this.min = min;
+class Go implements Comparable<Go> {
+    int next;
+    int pay;
+    Go(int next, int pay) {
+        this.next = next;
+        this.pay = pay;
     }
-
     @Override
-    public int compareTo(Pair o) {
-        return this.min - o.min;
+    public int compareTo(Go o) {
+        return this.pay - o.pay;
     }
 }
