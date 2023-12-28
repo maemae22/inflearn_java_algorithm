@@ -18,34 +18,26 @@ public class P07_원더랜드_최소스패닝트리_크루스칼_Union_Find활�
             unf[i]=i;
         }
 
-        ArrayList<ArrayList<Road>> list = new ArrayList<>();
-        for (int i=0; i<=V; i++) {
-            list.add(new ArrayList<Road>());
-        }
-
+        ArrayList<Road> list = new ArrayList<>();
         for (int i=0; i<E; i++) {
             st = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
             int c = Integer.parseInt(st.nextToken());
-            list.get(a).add(new Road(b, c));
-            list.get(b).add(new Road(a, c));
+            list.add(new Road(a, b, c));
         }
 
+        Collections.sort(list);
         int answer = 0;
-        PriorityQueue<Road> q = new PriorityQueue<>();
-        for (Road tmp : list.get(1)) {
-            q.offer(tmp);
-        }
-
-        while (!q.isEmpty()) {
-            Road tmp = q.poll();
-            if (find(1)!=find(tmp.index)) {
+        int count = 0;
+        for (Road tmp : list) {
+            if (find(tmp.num1)!=find(tmp.num2)) {
+                union(tmp.num1, tmp.num2);
                 answer += tmp.pay;
-                union(1, tmp.index);
-                for (Road next : list.get(tmp.index)) {
-                    q.offer(next);
-                }
+                count++;
+            }
+            if (count==V-1) {
+                break;
             }
         }
 
@@ -68,10 +60,12 @@ public class P07_원더랜드_최소스패닝트리_크루스칼_Union_Find활�
 }
 
 class Road implements Comparable<Road> {
-    int index;
+    int num1;
+    int num2;
     int pay;
-    Road(int index, int pay) {
-        this.index = index;
+    Road(int num1, int num2, int pay) {
+        this.num1 = num1;
+        this.num2 = num2;
         this.pay = pay;
     }
 
