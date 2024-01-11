@@ -2,37 +2,28 @@ import java.util.*;
 
 public class P01_타일점프 {
     public int solution(int[] nums) {
-
-        return BFS(nums);
-    }
-
-    public int BFS(int[] nums) {
-        int target = nums.length-1;
         Queue<Integer> q = new LinkedList<>();
         q.offer(0);
 
-        int[] check = new int[nums.length];
-        int answer = -1;
         int count = 0;
-
         while (!q.isEmpty()) {
             int size = q.size();
-            for (int k=0; k<size; k++) {
+            for (int i=0; i<size; i++) {
                 int tmp = q.poll();
-                for (int i=1; i<=nums[tmp]; i++) {
-                    if (tmp+i==target) {
+                for (int j=1; j<=nums[tmp]; j++) {
+                    int next = tmp+j;
+                    if (nums.length-1<=next) {
                         return count+1;
-                    } else if (check[tmp+i]==0 && tmp+i<target) {
-                        check[tmp+i]=1;
-                        q.offer(tmp+i);
+                    }
+                    if (!q.contains(next)) {
+                        q.offer(next);
                     }
                 }
             }
             count++;
-//            System.out.println(count+"="+q);
         }
 
-        return answer;
+        return -1;
     }
 
     public static void main(String[] args) {
