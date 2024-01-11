@@ -4,6 +4,8 @@ public class P01_타일점프 {
     public int solution(int[] nums) {
         Queue<Integer> q = new LinkedList<>();
         q.offer(0);
+        int[] check = new int[nums.length];
+        check[0]=1;
 
         int count = 0;
         while (!q.isEmpty()) {
@@ -15,8 +17,9 @@ public class P01_타일점프 {
                     if (nums.length-1<=next) {
                         return count+1;
                     }
-                    if (!q.contains(next)) {
+                    if (check[next]==0) {
                         q.offer(next);
+                        check[next]=1;
                     }
                 }
             }
