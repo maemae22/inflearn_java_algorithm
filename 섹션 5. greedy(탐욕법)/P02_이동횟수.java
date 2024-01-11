@@ -4,19 +4,21 @@ public class P02_이동횟수 {
     public int solution(int[] nums) {
         int answer = 0;
         Arrays.sort(nums);
-        int left = 0;
-        int right = nums.length-1;
-        while(left <= right){
-            if(nums[left] + nums[right] <= 5){
-                answer++;
-                left++;
-                right--;
+        int lt = 0;
+        int rt = nums.length-1;
+        while (lt<=rt) {
+            int remain = 5;
+            while (rt>=0 && remain-nums[rt]>=0) {
+                remain -= nums[rt];
+                rt--;
             }
-            else{
-                answer++;
-                right--;
+            while (lt<nums.length && remain-nums[lt]>=0) {
+                remain -= nums[lt];
+                lt++;
             }
+            answer++;
         }
+
         return answer;
     }
 
