@@ -2,28 +2,36 @@ import java.util.*;
 
 public class P05_전투게임 {
     public int[] solution(String[] students) {
-        int n = students.length;
-        int[] answer = new int[n];
-        ArrayList<Info> list = new ArrayList<>();
-        for(int i = 0; i < n; i++){
-            Character a = students[i].split(" ")[0].charAt(0);
-            int b = Integer.parseInt(students[i].split(" ")[1]);
-            list.add(new Info(i, a, b));
+        int[] answer = new int[students.length];
+        List<Game> list = new ArrayList<>();
+        for (int i=0; i<students.length; i++) {
+            StringTokenizer st = new StringTokenizer(students[i]);
+            char team = st.nextToken().charAt(0);
+            int power = Integer.parseInt(st.nextToken());
+            list.add(new Game(i, team, power));
         }
+
         Collections.sort(list);
-        HashMap<Character, Integer> Tp = new HashMap<>();
-        int j = 0, total = 0;
-        for(int i = 1; i < n; i++){
-            for( ; j < n; j++){
-                if(list.get(j).power < list.get(i).power){
-                    total += list.get(j).power;
-                    char x = list.get(j).team;
-                    Tp.put(x, Tp.getOrDefault(x, 0) + list.get(j).power);
+        int[] teamsSum = new int[26];
+        int sum = 0;
+
+        for (int i=0; i<list.size(); i++) {
+            Game tmp = list.get(i);
+            answer[tmp.index] = sum - teamsSum[tmp.team-97];
+            sum += tmp.power;
+            teamsSum[tmp.team-97] += tmp.power;
+
+            int pri = i-1;
+            int count = 0;
+            while (0<=pri && tmp.power==list.get(pri).power) {
+                if (list.get(pri).team!=tmp.team) {
+                    count++;
                 }
-                else break;
+                pri--;
             }
-            answer[list.get(i).idx] = total - Tp.getOrDefault(list.get(i).team, 0);
+            answer[tmp.index] -= tmp.power*(count);
         }
+
         return answer;
     }
 
@@ -36,17 +44,17 @@ public class P05_전투게임 {
     }
 }
 
-class Info implements Comparable<Info>{
-    public int idx;
-    public Character team;
-    public int power;
-    Info(int idx, Character team, int power){
-        this.idx = idx;
+class Game implements Comparable<Game> {
+    int index;
+    char team;
+    int power;
+    Game(int index, char team, int power) {
+        this.index = index;
         this.team = team;
         this.power = power;
     }
     @Override
-    public int compareTo(Info ob){
-        return this.power - ob.power;
+    public int compareTo(Game o) {
+        return this.power-o.power;
     }
 }
