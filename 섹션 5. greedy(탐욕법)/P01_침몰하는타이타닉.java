@@ -6,7 +6,7 @@ public class P01_침몰하는타이타닉 {
         int lt = 0;
         int rt = nums.length-1;
         int answer = 0;
-        while (lt<rt) {
+        while (lt<=rt) {
             if (nums[lt]+nums[rt]<=m) {
                 answer++;
                 lt++;
