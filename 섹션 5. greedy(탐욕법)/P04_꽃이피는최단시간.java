@@ -2,20 +2,19 @@ import java.util.*;
 
 public class P04_꽃이피는최단시간 {
     public int solution(int[] plantTime, int[] growTime) {
+        List<Plant> list = new ArrayList<>();
+        for (int i=0; i<plantTime.length; i++) {
+            list.add(new Plant(plantTime[i], growTime[i]));
+        }
+
+        Collections.sort(list);
+        int plant = 0;
         int answer = 0;
-        int n= plantTime.length;
-        int[][] list = new int[n][2];
-        for(int i = 0; i < n; i++){
-            list[i][0] = plantTime[i];
-            list[i][1] = growTime[i];
+        for (Plant tmp : list) {
+            plant += tmp.seed;
+            answer = Math.max(answer, plant+tmp.grow);
         }
-        Arrays.sort(list, (a, b) -> b[1] - a[1]);
-        int start = 0, end = 0;
-        for(int[] x : list){
-            end = start + x[0] + x[1];
-            answer = Math.max(answer, end);
-            start += x[0];
-        }
+
         return answer;
     }
 
@@ -26,5 +25,18 @@ public class P04_꽃이피는최단시간 {
         System.out.println(T.solution(new int[]{1, 1, 1}, new int[]{7, 3, 2}));
         System.out.println(T.solution(new int[]{5, 7, 10, 15, 7, 3, 5}, new int[]{6, 7, 2, 10, 15, 6, 7}));
         System.out.println(T.solution(new int[]{1, 2, 3, 4, 5, 6, 7}, new int[]{7, 5, 4, 3, 2, 1, 6}));
+    }
+}
+
+class Plant implements Comparable<Plant> {
+    int seed;
+    int grow;
+    Plant(int seed, int grow) {
+        this.seed = seed;
+        this.grow = grow;
+    }
+    @Override
+    public int compareTo(Plant o) {
+        return o.grow - this.grow;
     }
 }
