@@ -2,23 +2,24 @@ import java.util.*;
 
 public class P02_최소환승경로 {
     public int solution(int[][] routes, int s, int e) {
-        ArrayList<ArrayList<Integer>> list = new ArrayList<>();
-        for (int i=0; i<=1000000; i++) {
-            list.add(new ArrayList<>());
-        }
+        HashMap<Integer, ArrayList<Integer>> map = new HashMap<>();
         for (int i=0; i<routes.length; i++) {
             for (int j=0; j<routes[i].length; j++) {
-                list.get(routes[i][j]).add(i);
+                int station = routes[i][j];
+                ArrayList<Integer> tmp = map.getOrDefault(station, new ArrayList<>());
+                tmp.add(i);
+                map.put(station, tmp);
             }
         }
+
         int[] end = new int[routes.length];
-        for (int tmp : list.get(e)) {
+        for (int tmp : map.get(e)) {
             end[tmp]=1;
         }
 
         Queue<Integer> q = new LinkedList<>();
         int[] check = new int[routes.length];
-        for (int tmp : list.get(s)) {
+        for (int tmp : map.get(s)) {
             check[tmp]=1;
             q.add(tmp);
             if (end[tmp]==1) {
@@ -32,7 +33,7 @@ public class P02_최소환승경로 {
             for (int i=0; i<size; i++) {
                 int nowLine = q.poll();
                 for (int station : routes[nowLine]) {
-                    for (int nextLine : list.get(station)) {
+                    for (int nextLine : map.get(station)) {
                         if (end[nextLine]==1) {
                             return count+1;
                         }
