@@ -48,7 +48,10 @@ public class P06_숲속의기사 {
 
         int answer = Integer.MAX_VALUE;
         for (int[] loc : berry) {
-            answer = Math.min(answer, dis[loc[0]][loc[1]]);
+            int tmp = dis[loc[0]][loc[1]];
+            if (tmp!=0) {
+                answer = Math.min(answer, tmp);
+            }
         }
 
         return answer;
