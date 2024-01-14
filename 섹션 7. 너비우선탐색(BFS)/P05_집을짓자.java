@@ -127,6 +127,47 @@ public class P05_집을짓자 {
         return answer;
     }
 
+    public int solution3(int[][] board) {
+        int N = board.length;
+        int[][] dis = new int[N][N];
+        int emptyLand = 0;
+        int answer = Integer.MAX_VALUE;
+
+        int[] dx = {0, 0, 1, -1};
+        int[] dy = {1, -1, 0, 0};
+
+        for (int i=0; i<N; i++) {
+            for (int j=0; j<N; j++) {
+                if (board[i][j]==1) {
+                    answer = Integer.MAX_VALUE;
+                    int L = 1;
+                    Queue<int[]> q = new LinkedList<>();
+                    q.offer(new int[]{i, j});
+                    while (!q.isEmpty()) {
+                        int size = q.size();
+                        for (int p=0; p<size; p++) {
+                            int[] now = q.poll();
+                            for (int k=0; k<4; k++) {
+                                int nx = now[0]+dx[k];
+                                int ny = now[1]+dy[k];
+                                if (0<=nx && nx<N && 0<=ny && ny<N && board[nx][ny]==emptyLand) {
+                                    board[nx][ny]--;
+                                    q.offer(new int[]{nx, ny});
+                                    dis[nx][ny] += L;
+                                    answer = Math.min(answer, dis[nx][ny]);
+                                }
+                            }
+                        }
+                        L++;
+                    }
+                    emptyLand--;
+                }
+            }
+        }
+
+        return answer==Integer.MAX_VALUE ? -1 : answer;
+    }
+
     public static void main(String[] args) {
         P05_집을짓자 T = new P05_집을짓자();
         System.out.println(T.solution(new int[][]{{1, 0, 2, 0, 1}, {0, 0, 0, 0, 0}, {0, 2, 1, 0, 0}, {2, 0, 0, 2, 2}, {0, 0, 0, 0, 0}}));
@@ -138,5 +179,10 @@ public class P05_집을짓자 {
         System.out.println(T.solution2(new int[][]{{1, 0, 0, 1}, {0, 0, 2, 0}, {0, 0, 1, 0}, {2, 2, 0, 0}}));
         System.out.println(T.solution2(new int[][]{{1, 2, 0, 0}, {0, 0, 1, 2}, {0, 2, 0, 0}, {0, 2, 1, 0}}));
         System.out.println(T.solution2(new int[][]{{1, 0, 0, 1}, {0, 0, 2, 0}, {0, 0, 1, 0}, {2, 2, 0, 1}}));
+        System.out.println();
+        System.out.println(T.solution3(new int[][]{{1, 0, 2, 0, 1}, {0, 0, 0, 0, 0}, {0, 2, 1, 0, 0}, {2, 0, 0, 2, 2}, {0, 0, 0, 0, 0}}));
+        System.out.println(T.solution3(new int[][]{{1, 0, 0, 1}, {0, 0, 2, 0}, {0, 0, 1, 0}, {2, 2, 0, 0}}));
+        System.out.println(T.solution3(new int[][]{{1, 2, 0, 0}, {0, 0, 1, 2}, {0, 2, 0, 0}, {0, 2, 1, 0}}));
+        System.out.println(T.solution3(new int[][]{{1, 0, 0, 1}, {0, 0, 2, 0}, {0, 0, 1, 0}, {2, 2, 0, 1}}));
     }
 }
