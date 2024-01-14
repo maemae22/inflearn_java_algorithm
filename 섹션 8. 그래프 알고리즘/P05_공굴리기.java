@@ -6,7 +6,7 @@ public class P05_공굴리기 {
         for (int[] tmp : check) {
             Arrays.fill(tmp, Integer.MAX_VALUE);
         }
-        Queue<int[]> q = new LinkedList<>();
+        PriorityQueue<int[]> q = new PriorityQueue<>((a, b)->a[2]-b[2]);
         check[s[0]][s[1]]=0;
         q.offer(new int[]{s[0], s[1], 0});
 
